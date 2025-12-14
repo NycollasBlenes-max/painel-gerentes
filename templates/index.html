@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parcial Gerentes</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='Simbolo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Selecione sua loja</h1>
+        
+        <div class="buttons-grid">
+            {% for button in buttons %}
+            <a href="{{ button.route }}" class="btn btn-gerencia">
+                <span class="btn-number">{{ button.id }}</span>
+                <span class="btn-label">{{ button.label }}</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

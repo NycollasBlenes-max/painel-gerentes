@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ nome }}</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='Simbolo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Container para mensagens de erro -->
+        <div id="errorAlert" class="error-alert hidden">
+            <div class="error-content">
+                <span class="error-icon">⚠️</span>
+                <div class="error-message">
+                    <strong>Erro de Conexão</strong>
+                    <p id="errorText">Ocorreu um erro ao atualizar os dados. Por favor, tente novamente em 3 minutos.</p>
+                </div>
+                <button class="error-close" onclick="fecharAlertaErro()">✕</button>
+            </div>
+        </div>
+        
+        <div class="header">
+            <a href="/" class="btn-back">← Voltar</a>
+            <h1>{{ nome }}</h1>
+            <div class="header-info">
+                <div class="datetime-display" id="datetimeDisplay">
+                    <div id="currentDateTime"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cards-section">
+            <div class="cards-container">
+                <div id="loading-spinner" class="loading-spinner hidden">
+                    <div class="spinner"></div>
+                    <p>Carregando dados...</p>
+                </div>
+                <div class="card-item">
+                    <div class="card-label">Móvel</div>
+                    <div class="card-value">0,00%</div>
+                </div>
+                <div class="card-item">
+                    <div class="card-label">Fixa</div>
+                    <div class="card-value">0,00%</div>
+                </div>
+                <div class="card-item">
+                    <div class="card-label">Smartphone</div>
+                    <div class="card-value">0,00%</div>
+                </div>
+                <div class="card-item">
+                    <div class="card-label">Eletrônico</div>
+                    <div class="card-value">0,00%</div>
+                </div>
+                <div class="card-item">
+                    <div class="card-label">Essenciais</div>
+                    <div class="card-value">0,00%</div>
+                </div>
+                <div class="card-item">
+                    <div class="card-label">Seguro</div>
+                    <div class="card-value">0,00%</div>
+                </div>
+                <div class="card-item">
+                    <div class="card-label">SVA</div>
+                    <div class="card-value">0,00%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção dos Cards de Essenciais (em linha única) -->
+        <div class="cards-essenciais-row">
+            <div class="card-item essenciais-card">
+                <div class="card-label">Clientes Atendidos</div>
+                <div class="card-value essenciais-card-value" id="cardClientesAtendidos">0,00</div>
+            </div>
+
+            <div class="card-item essenciais-card">
+                <div class="card-label">Viabilidade</div>
+                <div class="card-value essenciais-card-value" id="cardViabilidade">0,00</div>
+            </div>
+
+            <div class="card-item essenciais-card">
+                <div class="card-label">Controle</div>
+                <div class="card-value essenciais-card-value" id="cardControle">0,00</div>
+            </div>
+
+            <div class="card-item essenciais-card">
+                <div class="card-label">Pós</div>
+                <div class="card-value essenciais-card-value" id="cardPos">0,00</div>
+            </div>
+
+            <div class="card-item essenciais-card">
+                <div class="card-label">Pré</div>
+                <div class="card-value essenciais-card-value" id="cardPre">0,00</div>
+            </div>
+
+            <div class="card-item essenciais-card">
+                <div class="card-label">Não é cliente VIVO</div>
+                <div class="card-value essenciais-card-value" id="cardNaoClienteVivo">0,00</div>
+            </div>
+        </div>
+
+        <div class="content-wrapper">
+            <div class="tables-section">
+                <!-- COLUNA ESQUERDA -->
+                <!-- Tabela 1: Móvel -->
+                <table class="mini-table" id="tabela-movel">
+                    <thead>
+                        <tr>
+                            <th>Móvel</th>
+                            <th>Meta DU</th>
+                            <th>Realizado D0</th>
+                            <th>Quant.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="highlight-purple">
+                            <td>Pós</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr class="highlight-purple">
+                            <td>Controle</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="total-row">
+                            <td class="total-label">TOTAL</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <!-- COLUNA DIREITA -->
+                <!-- Tabela 2: Smartphone -->
+                <table class="mini-table" id="tabela-smartphone">
+                    <thead>
+                        <tr>
+                            <th>Smartphone</th>
+                            <th>Meta DU</th>
+                            <th>Realizado D0</th>
+                            <th>Quant.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>-</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="total-row">
+                            <td class="total-label">TOTAL</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <!-- COLUNA ESQUERDA -->
+                <!-- Tabela 3: Fixa -->
+                <table class="mini-table" id="tabela-fixa">
+                    <thead>
+                        <tr>
+                            <th>Fixa</th>
+                            <th>Meta DU</th>
+                            <th>Realizado D0</th>
+                            <th>Quant.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Alta Banda Larga</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Alta TV</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Alta Fixo</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Upgrade Fixa</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Banda Larga B2B</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="total-row">
+                            <td class="total-label">TOTAL</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <!-- COLUNA DIREITA -->
+                <!-- Tabela 4: Eletrônico -->
+                <table class="mini-table" id="tabela-eletronico">
+                    <thead>
+                        <tr>
+                            <th>Eletrônico</th>
+                            <th>Meta DU</th>
+                            <th>Realizado D0</th>
+                            <th>Quant.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>-</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="total-row">
+                            <td class="total-label">TOTAL</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <!-- COLUNA ESQUERDA -->
+                <!-- Tabela 5: Seguro -->
+                <table class="mini-table" id="tabela-seguro">
+                    <thead>
+                        <tr>
+                            <th>Seguro</th>
+                            <th>Meta DU</th>
+                            <th>Realizado D0</th>
+                            <th>Quant.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Seguro residencial</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Seguro celular</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="total-row">
+                            <td class="total-label">TOTAL</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <!-- COLUNA DIREITA -->
+                <!-- Tabela 6: Essenciais -->
+                <table class="mini-table" id="tabela-essenciais">
+                    <thead>
+                        <tr>
+                            <th>Essenciais</th>
+                            <th>Meta DU</th>
+                            <th>Realizado D0</th>
+                            <th>Quant.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Película</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Outros</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="total-row">
+                            <td class="total-label">TOTAL</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <!-- COLUNA ESQUERDA (sozinha na última linha) -->
+                <!-- Tabela 7: SVA -->
+                <table class="mini-table" id="tabela-sva">
+                    <thead>
+                        <tr>
+                            <th>SVA</th>
+                            <th>Meta DU</th>
+                            <th>Realizado D0</th>
+                            <th>Quant.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>-</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="total-row">
+                            <td class="total-label">TOTAL</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <button id="btnAtualizar" class="btn-atualizar-footer">
+            <span class="btn-text">Atualizar</span>
+        </button>
+    </div>
+    
+    <script>
+        // Número da loja extraído da URL
+        const numeroLoja = parseInt("{{ numero }}", 10);
+
+        // Lojas que NÃO têm o card de Fixa (números das lojas)
+        const lojasSemFixa = [1, 3, 5, 7, 9, 11, 13, 15];
+        // 1: ANCHIETA, 3: BOM JESUS DO ITABAPOANA, 5: ICONHA, 7: MIRACEMA, 
+        // 9: PIUMA, 11: QUISSAMA, 13: SANTO ANTONIO DE PADUA, 15: SAO FIDELIS
+
+        // Variáveis globais para controlar intervalos
+        let intervalDataHora = null;
+
+        // Mapeamento de nomes dos cards para a ordem correta na exibição
+        const ordensCards = {
+            'Móvel': 0,
+            'Fixa': 1,
+            'Smartphone': 2,
+            'Eletrônico': 3,
+            'Essenciais': 4,
+            'Seguro': 5,
+            'SVA': 6
+        };
+
+        let ultimaAtualizacao = null;
+        
+        // Função para ocultar card de Fixa se a loja não tiver Fixa
+        function configurarCardsVisiveis() {
+            if (lojasSemFixa.includes(numeroLoja)) {
+                console.log(`🚫 Loja ${numeroLoja} não tem Fixa - ocultando card`);
+                
+                // Adicionar classe ao container para ajustar grid
+                const cardsContainer = document.querySelector('.cards-container');
+                if (cardsContainer) {
+                    cardsContainer.classList.add('sem-fixa');
+                }
+                
+                // Ocultar o card de Fixa (segundo card - índice 1)
+                const cardsElements = document.querySelectorAll('.card-item');
+                if (cardsElements.length > 1) {
+                    cardsElements[1].style.display = 'none';
+                    console.log(`✅ Card Fixa ocultado com sucesso`);
+                }
+            }
+        }
+        
+        // Executar ao carregar a página
+        configurarCardsVisiveis();
+
+        // Função para exibir alerta de erro de conexão
+        function mostrarAlertaErro(mensagem = 'Ocorreu um erro ao atualizar os dados. Por favor, tente novamente em 3 minutos.') {
+            const errorAlert = document.getElementById('errorAlert');
+            const errorText = document.getElementById('errorText');
+            
+            if (errorAlert && errorText) {
+                errorText.textContent = mensagem;
+                errorAlert.classList.remove('hidden');
+                
+                // Auto-fechar após 5 segundos
+                setTimeout(() => {
+                    if (!errorAlert.classList.contains('hidden')) {
+                        errorAlert.classList.add('hidden');
+                    }
+                }, 5000);
+            }
+        }
+        
+        // Função para fechar manualmente o alerta de erro
+        function fecharAlertaErro() {
+            const errorAlert = document.getElementById('errorAlert');
+            if (errorAlert) {
+                errorAlert.classList.add('hidden');
+            }
+        }
+
+        function atualizarHoraUltimaSync() {
+            const now = new Date();
+            ultimaAtualizacao = now.toLocaleTimeString('pt-BR', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            
+            document.getElementById('currentDateTime').innerHTML = 
+                `<div>Última atualização:</div><div>${ultimaAtualizacao}</div>`;
+        }
+        
+        function updateDateTime() {
+            // Esta função não faz mais nada, mantida para compatibilidade
+        }
+        
+        // Função para sincronizar dados da loja (VERSÃO FICTÍCIA COM DADOS LOCAIS)
+        async function carregarDadosLoja() {
+            try {
+                console.log(`📡 Iniciando sincronização completa da loja ${numeroLoja}...`);
+                
+                // Mostrar spinner de carregamento
+                const spinner = document.getElementById('loading-spinner');
+                if (spinner) {
+                    spinner.classList.remove('hidden');
+                }
+                
+                // Simular delay de processamento (sem fazer requisição real)
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                console.log('✅ Sincronização concluída com sucesso!');
+                console.log(`📊 Registros atualizados: ${Math.floor(Math.random() * 50 + 20)}`);
+                
+                // Ocultar spinner de carregamento após sincronização
+                if (spinner) {
+                    spinner.classList.add('hidden');
+                }
+                
+                // Atualizar hora da última sincronização
+                atualizarHoraUltimaSync();
+                
+                console.log('✅ Sincronização concluída! Os cards serão atualizados ao carregar as tabelas.');
+            } catch (erro) {
+                console.error('❌ Erro ao sincronizar e carregar dados da loja:', erro);
+                const spinner = document.getElementById('loading-spinner');
+                if (spinner) {
+                    spinner.classList.add('hidden');
+                }
+            }
+        }
+        
+        // Função auxiliar para atualizar um card de pilar com base no percentual calculado
+        function atualizarCardPilar(nomeCard, metaDU, realizadoD0) {
+            try {
+                // Calcular percentual (Realizado D0 / Meta DU * 100)
+                let percentual = 0;
+                if (metaDU > 0) {
+                    percentual = (realizadoD0 / metaDU) * 100;
+                }
+                
+                // Formatar percentual
+                const percentualFormatado = percentual.toFixed(2).replace('.', ',') + '%';
+                
+                console.log(`📊 Atualizando card ${nomeCard}: ${realizadoD0.toFixed(2)} / ${metaDU.toFixed(2)} = ${percentualFormatado}`);
+                
+                // Encontrar o card correspondente
+                const cardsElements = document.querySelectorAll('.card-item');
+                const ordemExibicao = ['Móvel', 'Fixa', 'Smartphone', 'Eletrônico', 'Essenciais', 'Seguro', 'SVA'];
+                const indexCard = ordemExibicao.indexOf(nomeCard);
+                
+                if (indexCard >= 0 && indexCard < cardsElements.length) {
+                    const cardElement = cardsElements[indexCard];
+                    const value = cardElement.querySelector('.card-value');
+                    
+                    if (value) {
+                        value.textContent = percentualFormatado;
+                        
+                        // Remover classes anteriores
+                        value.classList.remove('value-success', 'value-danger', 'value-warning');
+                        
+                        // Adicionar classe baseado no valor
+                        if (percentual >= 100) {
+                            value.classList.add('value-success');
+                            console.log(`✅ ${nomeCard} >= 100% - VERDE`);
+                        } else if (percentual >= 90) {
+                            value.classList.add('value-warning');
+                            console.log(`⚠️ ${nomeCard} 90%-99% - LARANJA`);
+                        } else {
+                            value.classList.add('value-danger');
+                            console.log(`❌ ${nomeCard} < 90% - VERMELHO`);
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error(`❌ Erro ao atualizar card ${nomeCard}:`, error);
+            }
+        }
+        
+        // Função auxiliar para colorir a célula de Realizado D0 comparada com Meta DU
+        function colorirRealizadoVsMetaDU(cellRealizadoD0, metaDUText, realizadoD0Text) {
+            try {
+                // Remover classes anteriores
+                cellRealizadoD0.classList.remove('realizado-insuficiente', 'realizado-suficiente');
+                
+                // Converter para números
+                const metaDUNum = parseFloat(String(metaDUText || '0').replace('R$', '').trim().replace(/\./g, '').replace(',', '.')) || 0;
+                const realizadoNum = parseFloat(String(realizadoD0Text || '0').replace('R$', '').trim().replace(/\./g, '').replace(',', '.')) || 0;
+                
+                // Aplicar coloração
+                if (realizadoNum < metaDUNum) {
+                    cellRealizadoD0.classList.add('realizado-insuficiente');
+                } else {
+                    cellRealizadoD0.classList.add('realizado-suficiente');
+                }
+            } catch (e) {
+                console.warn('⚠️ Erro ao colorir célula:', e);
+            }
+        }
+        
+        // Função para gerar dados fictícios da tabela
+        function gerarDadosTabelaFiccao(categorias) {
+            return categorias.map(categoria => {
+                const metaDU = Math.random() * 8000 + 2000; // 2000-10000
+                const realizadoD0 = Math.random() * 8000 + 1500; // 1500-9500
+                const quantidade = Math.floor(Math.random() * 45 + 5); // 5-50
+                return [categoria, `R$ ${metaDU.toFixed(2).replace('.', ',')}`, `R$ ${realizadoD0.toFixed(2).replace('.', ',')}`, quantidade.toString()];
+            });
+        }
+
+        // Função para carregar dados da tabela Móvel (VERSÃO FICTÍCIA)
+        async function carregarTabelaMovel() {
+            try {
+                console.log(`📊 Carregando tabela Móvel da loja ${numeroLoja}...`);
+                
+                // Simular delay
+                await new Promise(resolve => setTimeout(resolve, 800));
+                
+                const tabelaMovel = document.getElementById('tabela-movel');
+                if (!tabelaMovel) {
+                    console.error('❌ Tabela Móvel não encontrada na página');
+                    return;
+                }
+                
+                const tbody = tabelaMovel.querySelector('tbody');
+                if (!tbody) {
+                    console.error('❌ tbody da tabela Móvel não encontrada');
+                    return;
+                }
+                
+                // Gerar dados fictícios para Pós e Controle
+                const dadosTabela = gerarDadosTabelaFiccao(['Pós', 'Controle']);
+                console.log(`📋 Dados fictícios gerados (${dadosTabela.length} linhas):`, dadosTabela);
+                
+                let totalMetaDUPosControle = 0;
+                let totalRealizadoD0PosControle = 0;
+                let totalQuantPosControle = 0;
+                
+                const linhas = tbody.querySelectorAll('tr');
+                linhas.forEach((linha, index) => {
+                    if (index < dadosTabela.length) {
+                        const cells = linha.querySelectorAll('td');
+                        const linhaData = dadosTabela[index];
+                        
+                        if (cells.length >= 4) {
+                            cells[0].textContent = linhaData[0];
+                            cells[1].textContent = linhaData[1];
+                            cells[2].textContent = linhaData[2];
+                            cells[3].textContent = linhaData[3];
+                            
+                            colorirRealizadoVsMetaDU(cells[2], linhaData[1], linhaData[2]);
+                            
+                            const val1 = parseFloat(linhaData[1].replace('R$', '').replace(',', '.')) || 0;
+                            const val2 = parseFloat(linhaData[2].replace('R$', '').replace(',', '.')) || 0;
+                            const val3 = parseInt(linhaData[3]) || 0;
+                            
+                            totalMetaDUPosControle += val1;
+                            totalRealizadoD0PosControle += val2;
+                            totalQuantPosControle += val3;
+                        }
+                    }
+                });
+                
+                atualizarCardPilar('Móvel', totalMetaDUPosControle, totalRealizadoD0PosControle);
+                
+                const tfoot = tabelaMovel.querySelector('tfoot');
+                if (tfoot) {
+                    const totalRow = tfoot.querySelector('tr');
+                    if (totalRow) {
+                        const totalCells = totalRow.querySelectorAll('td');
+                        if (totalCells.length >= 4) {
+                            totalCells[1].textContent = `R$ ${totalMetaDUPosControle.toFixed(2).replace('.', ',')}`;
+                            totalCells[2].textContent = `R$ ${totalRealizadoD0PosControle.toFixed(2).replace('.', ',')}`;
+                            totalCells[3].textContent = totalQuantPosControle.toString();
+                        }
+                    }
+                }
+                
+                console.log('✅ Tabela Móvel atualizada com sucesso!');
+            } catch (erro) {
+                console.error('❌ Erro ao carregar tabela Móvel:', erro);
+            }
+        }
+        
+        // Função para carregar dados da tabela Fixa (VERSÃO FICTÍCIA)
+        async function carregarTabelaFixa() {
+            // Não carregar se a loja não tem Fixa
+            if (lojasSemFixa.includes(numeroLoja)) {
+                console.log(`⏭️ Loja ${numeroLoja} não tem Fixa - pulando carregamento da tabela`);
+                return;
+            }
+            
+            try {
+                console.log(`📊 Carregando tabela Fixa da loja ${numeroLoja}...`);
+                
+                await new Promise(resolve => setTimeout(resolve, 800));
+                
+                const tabelaFixa = document.getElementById('tabela-fixa');
+                if (!tabelaFixa) return;
+                
+                const tbody = tabelaFixa.querySelector('tbody');
+                if (!tbody) return;
+                
+                const dadosTabela = gerarDadosTabelaFiccao(['Alta Banda Larga', 'Alta TV', 'Alta Fixo', 'Upgrade Fixa', 'Banda Larga B2B']);
+                console.log(`📋 Dados fictícios gerados (${dadosTabela.length} linhas):`, dadosTabela);
+                
+                let totalCol2 = 0, totalCol3 = 0, totalCol4 = 0;
+                const linhas = tbody.querySelectorAll('tr');
+                
+                linhas.forEach((linha, index) => {
+                    if (index < dadosTabela.length) {
+                        const cells = linha.querySelectorAll('td');
+                        const linhaData = dadosTabela[index];
+                        
+                        if (cells.length >= 4) {
+                            cells[0].textContent = linhaData[0];
+                            cells[1].textContent = linhaData[1];
+                            cells[2].textContent = linhaData[2];
+                            cells[3].textContent = linhaData[3];
+                            colorirRealizadoVsMetaDU(cells[2], linhaData[1], linhaData[2]);
+                            
+                            const val1 = parseFloat(linhaData[1].replace('R$', '').replace(',', '.')) || 0;
+                            const val2 = parseFloat(linhaData[2].replace('R$', '').replace(',', '.')) || 0;
+                            const val3 = parseInt(linhaData[3]) || 0;
+                            totalCol2 += val1;
+                            totalCol3 += val2;
+                            totalCol4 += val3;
+                        }
+                    }
+                });
+                
+                atualizarCardPilar('Fixa', totalCol2, totalCol3);
+                
+                const tfoot = tabelaFixa.querySelector('tfoot');
+                if (tfoot) {
+                    const totalRow = tfoot.querySelector('tr');
+                    if (totalRow) {
+                        const totalCells = totalRow.querySelectorAll('td');
+                        if (totalCells.length >= 4) {
+                            totalCells[1].textContent = `R$ ${totalCol2.toFixed(2).replace('.', ',')}`;
+                            totalCells[2].textContent = `R$ ${totalCol3.toFixed(2).replace('.', ',')}`;
+                            totalCells[3].textContent = totalCol4.toString();
+                        }
+                    }
+                }
+                console.log('✅ Tabela Fixa atualizada com sucesso!');
+            } catch (erro) {
+                console.error('❌ Erro ao carregar tabela Fixa:', erro);
+            }
+        }
+        
+        // Função para carregar dados da tabela Seguro (VERSÃO FICTÍCIA)
+        async function carregarTabelaSeguro() {
+            try {
+                console.log(`📊 Carregando tabela Seguro da loja ${numeroLoja}...`);
+                
+                await new Promise(resolve => setTimeout(resolve, 800));
+                
+                const tabelaSeguro = document.getElementById('tabela-seguro');
+                if (!tabelaSeguro) return;
+                
+                const tbody = tabelaSeguro.querySelector('tbody');
+                if (!tbody) return;
+                
+                const dadosTabela = gerarDadosTabelaFiccao(['Seguro residencial', 'Seguro celular']);
+                
+                let totalCol2 = 0, totalCol3 = 0, totalCol4 = 0;
+                const linhas = tbody.querySelectorAll('tr');
+                
+                linhas.forEach((linha, index) => {
+                    if (index < dadosTabela.length) {
+                        const cells = linha.querySelectorAll('td');
+                        const linhaData = dadosTabela[index];
+                        
+                        if (cells.length >= 4) {
+                            cells[0].textContent = linhaData[0];
+                            cells[1].textContent = linhaData[1];
+                            cells[2].textContent = linhaData[2];
+                            cells[3].textContent = linhaData[3];
+                            colorirRealizadoVsMetaDU(cells[2], linhaData[1], linhaData[2]);
+                            
+                            const val1 = parseFloat(linhaData[1].replace('R$', '').replace(',', '.')) || 0;
+                            const val2 = parseFloat(linhaData[2].replace('R$', '').replace(',', '.')) || 0;
+                            const val3 = parseInt(linhaData[3]) || 0;
+                            totalCol2 += val1;
+                            totalCol3 += val2;
+                            totalCol4 += val3;
+                        }
+                    }
+                });
+                
+                atualizarCardPilar('Seguro', totalCol2, totalCol3);
+                
+                const tfoot = tabelaSeguro.querySelector('tfoot');
+                if (tfoot) {
+                    const totalRow = tfoot.querySelector('tr');
+                    if (totalRow) {
+                        const totalCells = totalRow.querySelectorAll('td');
+                        if (totalCells.length >= 4) {
+                            totalCells[1].textContent = `R$ ${totalCol2.toFixed(2).replace('.', ',')}`;
+                            totalCells[2].textContent = `R$ ${totalCol3.toFixed(2).replace('.', ',')}`;
+                            totalCells[3].textContent = totalCol4.toString();
+                        }
+                    }
+                }
+                console.log('✅ Tabela Seguro atualizada com sucesso!');
+            } catch (erro) {
+                console.error('❌ Erro ao carregar tabela Seguro:', erro);
+            }
+        }
+        
+        // Função para carregar dados da tabela SVA (VERSÃO FICTÍCIA)
+        async function carregarTabelaSVA() {
+            try {
+                console.log(`📊 Carregando tabela SVA da loja ${numeroLoja}...`);
+                await new Promise(resolve => setTimeout(resolve, 800));
+                
+                const tabelaSVA = document.getElementById('tabela-sva');
+                if (!tabelaSVA) return;
+                const tbody = tabelaSVA.querySelector('tbody');
+                if (!tbody) return;
+                
+                const dadosTabela = gerarDadosTabelaFiccao(['-']);
+                let totalCol2 = 0, totalCol3 = 0, totalCol4 = 0;
+                const linhas = tbody.querySelectorAll('tr');
+                
+                linhas.forEach((linha, index) => {
+                    if (index < dadosTabela.length) {
+                        const cells = linha.querySelectorAll('td');
+                        const linhaData = dadosTabela[index];
+                        if (cells.length >= 4) {
+                            cells[0].textContent = linhaData[0];
+                            cells[1].textContent = linhaData[1];
+                            cells[2].textContent = linhaData[2];
+                            cells[3].textContent = linhaData[3];
+                            colorirRealizadoVsMetaDU(cells[2], linhaData[1], linhaData[2]);
+                            const val1 = parseFloat(linhaData[1].replace('R$', '').replace(',', '.')) || 0;
+                            const val2 = parseFloat(linhaData[2].replace('R$', '').replace(',', '.')) || 0;
+                            const val3 = parseInt(linhaData[3]) || 0;
+                            totalCol2 += val1; totalCol3 += val2; totalCol4 += val3;
+                        }
+                    }
+                });
+                
+                atualizarCardPilar('SVA', totalCol2, totalCol3);
+                const tfoot = tabelaSVA.querySelector('tfoot');
+                if (tfoot) {
+                    const totalRow = tfoot.querySelector('tr');
+                    if (totalRow) {
+                        const totalCells = totalRow.querySelectorAll('td');
+                        if (totalCells.length >= 4) {
+                            totalCells[1].textContent = `R$ ${totalCol2.toFixed(2).replace('.', ',')}`;
+                            totalCells[2].textContent = `R$ ${totalCol3.toFixed(2).replace('.', ',')}`;
+                            totalCells[3].textContent = totalCol4.toString();
+                        }
+                    }
+                }
+                console.log('✅ Tabela SVA atualizada com sucesso!');
+            } catch (erro) {
+                console.error('❌ Erro ao carregar tabela SVA:', erro);
+            }
+        }
+        
+        // Função para carregar dados da tabela SMARTPHONE (VERSÃO FICTÍCIA)
+        async function carregarTabelaSmartphone() {
+            try {
+                console.log(`📊 Carregando tabela SMARTPHONE da loja ${numeroLoja}...`);
+                await new Promise(resolve => setTimeout(resolve, 800));
+                const tabelaSmartphone = document.getElementById('tabela-smartphone');
+                if (!tabelaSmartphone) return;
+                const tbody = tabelaSmartphone.querySelector('tbody');
+                if (!tbody) return;
+                const dadosTabela = gerarDadosTabelaFiccao(['-']);
+                let totalCol2 = 0, totalCol3 = 0, totalCol4 = 0;
+                const linhas = tbody.querySelectorAll('tr');
+                linhas.forEach((linha, index) => {
+                    if (index < dadosTabela.length) {
+                        const cells = linha.querySelectorAll('td');
+                        const linhaData = dadosTabela[index];
+                        if (cells.length >= 4) {
+                            cells[0].textContent = linhaData[0];
+                            cells[1].textContent = linhaData[1];
+                            cells[2].textContent = linhaData[2];
+                            cells[3].textContent = linhaData[3];
+                            colorirRealizadoVsMetaDU(cells[2], linhaData[1], linhaData[2]);
+                            const val1 = parseFloat(linhaData[1].replace('R$', '').replace(',', '.')) || 0;
+                            const val2 = parseFloat(linhaData[2].replace('R$', '').replace(',', '.')) || 0;
+                            const val3 = parseInt(linhaData[3]) || 0;
+                            totalCol2 += val1; totalCol3 += val2; totalCol4 += val3;
+                        }
+                    }
+                });
+                atualizarCardPilar('Smartphone', totalCol2, totalCol3);
+                const tfoot = tabelaSmartphone.querySelector('tfoot');
+                if (tfoot) {
+                    const totalRow = tfoot.querySelector('tr');
+                    if (totalRow) {
+                        const totalCells = totalRow.querySelectorAll('td');
+                        if (totalCells.length >= 4) {
+                            totalCells[1].textContent = `R$ ${totalCol2.toFixed(2).replace('.', ',')}`;
+                            totalCells[2].textContent = `R$ ${totalCol3.toFixed(2).replace('.', ',')}`;
+                            totalCells[3].textContent = totalCol4.toString();
+                        }
+                    }
+                }
+                console.log('✅ Tabela SMARTPHONE atualizada!');
+            } catch (erro) {
+                console.error('❌ Erro ao carregar tabela SMARTPHONE:', erro);
+            }
+        }
+        
+        // Função para carregar dados da tabela ELETRÔNICO (VERSÃO FICTÍCIA)
+        async function carregarTabelaEletronico() {
+            try {
+                console.log(`📊 Carregando tabela ELETRÔNICO da loja ${numeroLoja}...`);
+                await new Promise(resolve => setTimeout(resolve, 800));
+                const tabelaEletronico = document.getElementById('tabela-eletronico');
+                if (!tabelaEletronico) return;
+                const tbody = tabelaEletronico.querySelector('tbody');
+                if (!tbody) return;
+                const dadosTabela = gerarDadosTabelaFiccao(['-']);
+                let totalCol2 = 0, totalCol3 = 0, totalCol4 = 0;
+                const linhas = tbody.querySelectorAll('tr');
+                linhas.forEach((linha, index) => {
+                    if (index < dadosTabela.length) {
+                        const cells = linha.querySelectorAll('td');
+                        const linhaData = dadosTabela[index];
+                        if (cells.length >= 4) {
+                            cells[0].textContent = linhaData[0];
+                            cells[1].textContent = linhaData[1];
+                            cells[2].textContent = linhaData[2];
+                            cells[3].textContent = linhaData[3];
+                            colorirRealizadoVsMetaDU(cells[2], linhaData[1], linhaData[2]);
+                            const val1 = parseFloat(linhaData[1].replace('R$', '').replace(',', '.')) || 0;
+                            const val2 = parseFloat(linhaData[2].replace('R$', '').replace(',', '.')) || 0;
+                            const val3 = parseInt(linhaData[3]) || 0;
+                            totalCol2 += val1; totalCol3 += val2; totalCol4 += val3;
+                        }
+                    }
+                });
+                atualizarCardPilar('Eletrônico', totalCol2, totalCol3);
+                const tfoot = tabelaEletronico.querySelector('tfoot');
+                if (tfoot) {
+                    const totalRow = tfoot.querySelector('tr');
+                    if (totalRow) {
+                        const totalCells = totalRow.querySelectorAll('td');
+                        if (totalCells.length >= 4) {
+                            totalCells[1].textContent = `R$ ${totalCol2.toFixed(2).replace('.', ',')}`;
+                            totalCells[2].textContent = `R$ ${totalCol3.toFixed(2).replace('.', ',')}`;
+                            totalCells[3].textContent = totalCol4.toString();
+                        }
+                    }
+                }
+                console.log('✅ Tabela ELETRÔNICO atualizada!');
+            } catch (erro) {
+                console.error('❌ Erro ao carregar tabela ELETRÔNICO:', erro);
+            }
+        }
+        
+        // Função para carregar dados da tabela ESSENCIAIS (VERSÃO FICTÍCIA)
+        async function carregarTabelaEssenciais() {
+            try {
+                console.log(`📊 Carregando tabela ESSENCIAIS da loja ${numeroLoja}...`);
+                await new Promise(resolve => setTimeout(resolve, 800));
+                const tabelaEssenciais = document.getElementById('tabela-essenciais');
+                if (!tabelaEssenciais) return;
+                const todosOsTbodies = tabelaEssenciais.querySelectorAll('tbody');
+                if (todosOsTbodies.length === 0) return;
+                const dadosTabela = gerarDadosTabelaFiccao(['Película', 'Outros']);
+                let totalCol2 = 0, totalCol3 = 0, totalCol4 = 0;
+                let linhas = [];
+                todosOsTbodies.forEach(tbody => {
+                    const trs = tbody.querySelectorAll('tr');
+                    linhas = linhas.concat(Array.from(trs));
+                });
+                linhas.forEach((linha, index) => {
+                    if (index < dadosTabela.length) {
+                        const cells = linha.querySelectorAll('td');
+                        const linhaData = dadosTabela[index];
+                        if (cells.length >= 4) {
+                            cells[0].textContent = linhaData[0];
+                            cells[1].textContent = linhaData[1];
+                            cells[2].textContent = linhaData[2];
+                            cells[3].textContent = linhaData[3];
+                            colorirRealizadoVsMetaDU(cells[2], linhaData[1], linhaData[2]);
+                            const val1 = parseFloat(linhaData[1].replace('R$', '').replace(',', '.')) || 0;
+                            const val2 = parseFloat(linhaData[2].replace('R$', '').replace(',', '.')) || 0;
+                            const val3 = parseInt(linhaData[3]) || 0;
+                            totalCol2 += val1; totalCol3 += val2; totalCol4 += val3;
+                        }
+                    }
+                });
+                atualizarCardPilar('Essenciais', totalCol2, totalCol3);
+                const tfoot = tabelaEssenciais.querySelector('tfoot');
+                if (tfoot) {
+                    const totalRow = tfoot.querySelector('tr');
+                    if (totalRow) {
+                        const totalCells = totalRow.querySelectorAll('td');
+                        if (totalCells.length >= 4) {
+                            totalCells[1].textContent = `R$ ${totalCol2.toFixed(2).replace('.', ',')}`;
+                            totalCells[2].textContent = `R$ ${totalCol3.toFixed(2).replace('.', ',')}`;
+                            totalCells[3].textContent = totalCol4.toString();
+                        }
+                    }
+                }
+                console.log('✅ Tabela ESSENCIAIS atualizada!');
+            } catch (erro) {
+                console.error('❌ Erro ao carregar tabela ESSENCIAIS:', erro);
+            }
+        }
+        
+        // Atualizar hora da última sincronização ao carregar a página
+        atualizarHoraUltimaSync();
+        
+        // Carregar dados iniciais da página - REMOVIDO: agora só atualiza quando o usuário clicar no botão
+        // carregarDadosLoja();
+        // carregarClientesAtendidos();
+        // carregarViabilidade();
+        // carregarControle();
+        // carregarPre();
+        // carregarPos();
+        // carregarNaoClienteVivo();
+        // carregarTabelaMovel();
+        // carregarTabelaFixa();
+        // carregarTabelaSeguro();
+        // carregarTabelaSVA();
+        // carregarTabelaSmartphone();
+        // carregarTabelaEletronico();
+        // carregarTabelaEssenciais();
+        
+        // Função para buscar e atualizar clientes atendidos de hoje (VERSÃO FICTÍCIA)
+        async function carregarClientesAtendidos() {
+            try {
+                console.log(`📞 Carregando clientes atendidos de hoje para a loja ${numeroLoja}...`);
+                await new Promise(resolve => setTimeout(resolve, 500));
+                const cardElement = document.getElementById('cardClientesAtendidos');
+                if (cardElement) {
+                    cardElement.textContent = Math.floor(Math.random() * 100 + 50).toString();
+                }
+                console.log(`✅ Clientes atendidos carregado!`);
+            } catch (erro) {
+                console.error('❌ Erro ao carregar clientes atendidos:', erro);
+            }
+        }
+        
+        // Função para buscar e atualizar viabilidade (VERSÃO FICTÍCIA)
+        async function carregarViabilidade() {
+            try {
+                console.log(`✅ Carregando viabilidade para a loja ${numeroLoja}...`);
+                await new Promise(resolve => setTimeout(resolve, 500));
+                const cardElement = document.getElementById('cardViabilidade');
+                if (cardElement) {
+                    cardElement.textContent = Math.floor(Math.random() * 30 + 70).toString();
+                }
+                console.log(`✅ Viabilidade carregada!`);
+            } catch (erro) {
+                console.error('❌ Erro ao carregar viabilidade:', erro);
+            }
+        }
+        
+        // Função para buscar e atualizar controle (VERSÃO FICTÍCIA)
+        async function carregarControle() {
+            try {
+                console.log(`🔧 Carregando controle para a loja ${numeroLoja}...`);
+                await new Promise(resolve => setTimeout(resolve, 500));
+                const cardElement = document.getElementById('cardControle');
+                if (cardElement) {
+                    cardElement.textContent = Math.floor(Math.random() * 50 + 20).toString();
+                }
+                console.log(`✅ Controle carregado!`);
+            } catch (erro) {
+                console.error('❌ Erro ao carregar controle:', erro);
+            }
+        }
+        
+        // Função para buscar e atualizar pré (VERSÃO FICTÍCIA)
+        async function carregarPre() {
+            try {
+                console.log(`📱 Carregando pré para a loja ${numeroLoja}...`);
+                await new Promise(resolve => setTimeout(resolve, 500));
+                const cardElement = document.getElementById('cardPre');
+                if (cardElement) {
+                    cardElement.textContent = Math.floor(Math.random() * 60 + 30).toString();
+                }
+                console.log(`✅ Pré carregado!`);
+            } catch (erro) {
+                console.error('❌ Erro ao carregar pré:', erro);
+            }
+        }
+        
+        // Função para buscar e atualizar pós (VERSÃO FICTÍCIA)
+        async function carregarPos() {
+            try {
+                console.log(`📞 Carregando pós para a loja ${numeroLoja}...`);
+                await new Promise(resolve => setTimeout(resolve, 500));
+                const cardElement = document.getElementById('cardPos');
+                if (cardElement) {
+                    cardElement.textContent = Math.floor(Math.random() * 80 + 40).toString();
+                }
+                console.log(`✅ Pós carregado!`);
+            } catch (erro) {
+                console.error('❌ Erro ao carregar pós:', erro);
+            }
+        }
+        
+        // Função para buscar e atualizar não é cliente VIVO (VERSÃO FICTÍCIA)
+        async function carregarNaoClienteVivo() {
+            try {
+                console.log(`❌ Carregando não é cliente VIVO para a loja ${numeroLoja}...`);
+                await new Promise(resolve => setTimeout(resolve, 500));
+                const cardElement = document.getElementById('cardNaoClienteVivo');
+                if (cardElement) {
+                    cardElement.textContent = Math.floor(Math.random() * 30 + 10).toString();
+                }
+                console.log(`✅ Não é cliente VIVO carregado!`);
+            } catch (erro) {
+                console.error('❌ Erro ao carregar não é cliente VIVO:', erro);
+            }
+        }
+        
+        // Função para atualizar clientes atendidos
+        
+        // Função para parar intervalos quando sair da página
+        function pararIntervalos() {
+            console.log('🛑 Parando processos...');
+        }
+        
+        // Parar intervalos quando sair da página ou clicar em voltar
+        window.addEventListener('beforeunload', pararIntervalos);
+        
+        // Adicionar event listener ao botão Atualizar
+        const btnAtualizar = document.getElementById('btnAtualizar');
+        if (btnAtualizar) {
+            btnAtualizar.addEventListener('click', function() {
+                btnAtualizar.disabled = true;
+                
+                // Atualizar apenas o texto, mantendo a estrutura HTML
+                const btnText = btnAtualizar.querySelector('.btn-text');
+                if (btnText) {
+                    btnText.textContent = 'Atualizando...';
+                }
+                
+                console.log('🔄 Usuário clicou para atualizar dados');
+                carregarDadosLoja();
+                carregarClientesAtendidos();
+                carregarViabilidade();
+                carregarControle();
+                carregarPre();
+                carregarPos();
+                carregarNaoClienteVivo();
+                carregarTabelaMovel();
+                carregarTabelaFixa();
+                carregarTabelaSeguro();
+                carregarTabelaSVA();
+                carregarTabelaSmartphone();
+                carregarTabelaEletronico();
+                carregarTabelaEssenciais();
+                
+                // Reabilitar botão após 2 segundos
+                setTimeout(() => {
+                    btnAtualizar.disabled = false;
+                    if (btnText) {
+                        btnText.textContent = 'Atualizar';
+                    }
+                }, 2000);
+            });
+        }
+        
+    </script>
+</body>
+</html>
