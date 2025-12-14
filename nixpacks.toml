@@ -1,6 +1,4 @@
-[providers]
-python = true
-node = false
+providers = ["python"]
 
 [phases.setup]
 nixPkgs = ["python311", "gcc"]
@@ -9,4 +7,4 @@ nixPkgs = ["python311", "gcc"]
 cmds = ["pip install -r requirements.txt"]
 
 [start]
-cmd = "python main.py"
+cmd = "python app.py"
